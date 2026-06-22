@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tracy Mboya – Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       RESET & TOKENS
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:        #2563EB;
+      --blue-dark:   #1D4ED8;
+      --blue-light:  #EEF2FF;
+      --blue-mid:    #DBEAFE;
+      --text:        #111827;
+      --text-mid:    #374151;
+      --text-muted:  #6B7280;
+      --border:      #E5E7EB;
+      --border-dark: #CBD5E1;
+      --bg:          #FFFFFF;
+      --bg-alt:      #F9FAFB;
+      --hero-bg:     #F0F4FF;
+      --radius:      12px;
+      --nav-h:       64px;
+      --shadow-sm:   0 2px 8px rgba(0,0,0,0.07);
+      --shadow-md:   0 6px 24px rgba(0,0,0,0.10);
+      --shadow-blue: 0 8px 24px rgba(37,99,235,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); }
+
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: var(--nav-h);
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.2s;
+    }
+    nav:hover { box-shadow: var(--shadow-sm); }
+
+    .nav-brand {
+      font-weight: 800; font-size: 1rem; color: var(--text);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-brand:hover { color: var(--blue); }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 0.875rem; font-weight: 500;
+      color: var(--text-mid); position: relative; padding-bottom: 4px;
+      transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--blue);
+      transition: width 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-icons { display: flex; gap: 14px; }
+    .nav-icons a {
+      color: var(--text-muted); display: flex; align-items: center;
+      padding: 6px; border-radius: 6px;
+      transition: color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .nav-icons a:hover {
+      color: var(--blue); background: var(--blue-light);
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════════════
+       SHARED LAYOUT HELPERS
+    ═══════════════════════════════════════ */
+    .section-wrap {
+      padding: 80px 48px; max-width: 1200px; margin: 0 auto;
+    }
+    .section-wrap-full {
+      background: var(--bg-alt); padding: 80px 0;
+    }
+    .section-wrap-full .inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 48px;
+    }
+    .section-title {
+      font-size: 2.5rem; font-weight: 800; color: var(--text); margin-bottom: 12px;
+    }
+    .section-bar {
+      width: 72px; height: 3px; background: var(--blue);
+      border-radius: 2px; margin-bottom: 40px;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO  (Image 1)
+    ═══════════════════════════════════════ */
+    #hero { background: var(--hero-bg); padding: 80px 48px; }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .hero-name  { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
+    .hero-role  { font-size: 1.4rem; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+    .hero-sub   { font-size: 1rem; color: var(--text-mid); margin-bottom: 28px; }
+
+    .hero-contacts { display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.9rem; color: var(--text-mid); text-decoration: none;
+      padding: 6px 10px; border-radius: 8px;
+      transition: color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .hero-link:hover {
+      color: var(--blue); background: var(--blue-light);
+      transform: translateX(4px);
+    }
+    .hero-link svg { flex-shrink: 0; }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff;
+      border: 2px solid var(--blue); border-radius: 8px;
+      padding: 13px 28px; font-size: 0.95rem; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--blue-dark); border-color: var(--blue-dark);
+      transform: translateY(-2px); box-shadow: 0 6px 16px rgba(37,99,235,0.35);
+    }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--blue);
+      border: 2px solid var(--blue); border-radius: 8px;
+      padding: 13px 28px; font-size: 0.95rem; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-outline:hover {
+      background: var(--blue); color: #fff;
+      transform: translateY(-2px); box-shadow: 0 6px 16px rgba(37,99,235,0.25);
+    }
+
+    /* Hero photo */
+    .hero-photo-wrap {
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .hero-photo-wrap:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.16);
+    }
+.hero-photo { width: 100%; height: 600px; object-fit: cover; object-position: top; display: block; }
+    /* ═══════════════════════════════════════
+       ABOUT  (Image 2)
+    ═══════════════════════════════════════ */
+    .about-bio {
+      font-size: 1.05rem; line-height: 1.85; color: var(--text-mid);
+      max-width: 860px; margin-bottom: 48px;
+    }
+    .about-cards {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .about-card {
+      background: var(--blue-light); border-radius: var(--radius);
+      padding: 28px 22px; cursor: default;
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-blue);
+      background: var(--blue-mid);
+    }
+    .about-card-icon { color: var(--blue); margin-bottom: 16px; }
+    .about-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .about-card p  { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; }
+
+    /* ═══════════════════════════════════════
+       EXPERIENCE  (Image 3)
+    ═══════════════════════════════════════ */
+    .exp-list { display: flex; flex-direction: column; gap: 24px; }
+    .exp-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 32px 36px; background: var(--bg);
+      transition: box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .exp-card:hover {
+      box-shadow: var(--shadow-md); border-color: var(--border-dark);
+      transform: translateY(-3px);
+    }
+    .exp-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 6px; flex-wrap: wrap; gap: 8px;
+    }
+    .exp-title { font-size: 1.15rem; font-weight: 700; color: var(--text); }
+    .exp-meta  { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .exp-date, .exp-loc {
+      font-size: 0.83rem; color: var(--text-muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .exp-org   { font-size: 0.95rem; font-weight: 600; color: var(--blue); margin-bottom: 10px; }
+    .exp-desc  { font-size: 0.875rem; color: var(--text-muted); font-style: italic; margin-bottom: 16px; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .exp-bullets li {
+      font-size: 0.9rem; color: var(--text-mid); padding-left: 20px;
+      position: relative; line-height: 1.65;
+    }
+    .exp-bullets li::before {
+      content: '•'; position: absolute; left: 0;
+      color: var(--blue); font-size: 1.1rem; line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════
+       PROJECTS  (Image 4)
+    ═══════════════════════════════════════ */
+    .project-card {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: start; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 40px; margin-bottom: 32px; background: var(--bg);
+      transition: box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .project-card:hover {
+      box-shadow: var(--shadow-md); border-color: var(--border-dark);
+      transform: translateY(-4px);
+    }
+
+    /* project image with zoom overlay */
+    .project-img-wrap {
+      border-radius: 10px; overflow: hidden; position: relative;
+      transition: box-shadow 0.25s;
+    }
+    .project-img-wrap:hover { box-shadow: var(--shadow-md); }
+    .project-img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+      transition: transform 0.4s ease;
+    }
+    .project-img-wrap:hover .project-img { transform: scale(1.05); }
+    .project-img-overlay {
+      position: absolute; inset: 0; background: rgba(37,99,235,0.0);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s, background 0.3s;
+    }
+    .project-img-wrap:hover .project-img-overlay {
+      opacity: 1; background: rgba(37,99,235,0.18);
+    }
+    .project-img-overlay span {
+      color: #fff; font-size: 0.85rem; font-weight: 600;
+      background: rgba(37,99,235,0.75); padding: 8px 18px;
+      border-radius: 20px; letter-spacing: 0.03em;
+    }
+
+    .project-name { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+    .project-type { font-size: 0.95rem; font-weight: 600; color: var(--blue); margin-bottom: 16px; }
+    .project-desc {
+      font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 20px;
+    }
+    .project-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;
+    }
+    .project-bullets { list-style: none; margin-bottom: 24px; display: flex; flex-direction: column; gap: 9px; }
+    .project-bullets li {
+      font-size: 0.875rem; color: var(--text-mid); padding-left: 18px;
+      position: relative; line-height: 1.65;
+    }
+    .project-bullets li::before {
+      content: '•'; position: absolute; left: 0;
+      color: var(--blue); font-size: 1.1rem; line-height: 1.5;
+    }
+
+    /* project links */
+    .project-links { display: flex; gap: 12px; margin-bottom: 20px; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.82rem; font-weight: 600; color: var(--blue);
+      border: 1.5px solid var(--blue); border-radius: 20px; padding: 5px 14px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .project-link:hover {
+      background: var(--blue); color: #fff; transform: translateY(-2px);
+    }
+
+    /* tech tags */
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tech-tag {
+      background: var(--blue-light); color: var(--blue);
+      border: 1.5px solid transparent;
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 0.8rem; font-weight: 500;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .tech-tag:hover {
+      background: var(--blue-mid); border-color: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════════════
+       SKILLS  (Image 5)
+    ═══════════════════════════════════════ */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .skill-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 28px; background: var(--bg);
+      transition: box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .skill-card:hover {
+      box-shadow: var(--shadow-blue); border-color: var(--blue);
+      transform: translateY(-4px);
+    }
+    .skill-card-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+    .skill-card-header svg { color: var(--blue); flex-shrink: 0; }
+    .skill-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      background: var(--bg-alt); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 0.82rem; color: var(--text-mid);
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .skill-tag:hover {
+      border-color: var(--blue); color: var(--blue);
+      background: var(--blue-light); transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════════════
+       EDUCATION  (Image 6)
+    ═══════════════════════════════════════ */
+    .edu-list { display: flex; flex-direction: column; gap: 20px; }
+    .edu-card {
+      display: flex; gap: 20px; align-items: flex-start;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 26px 28px; background: var(--bg);
+      transition: box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .edu-card:hover {
+      box-shadow: var(--shadow-md); border-color: var(--border-dark);
+      transform: translateY(-3px);
+    }
+    .edu-icon {
+      width: 48px; height: 48px; min-width: 48px;
+      border-radius: 10px; background: var(--blue); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .edu-card:hover .edu-icon {
+      background: var(--blue-dark); transform: scale(1.08);
+    }
+    .edu-body { flex: 1; }
+    .edu-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .edu-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .edu-date  {
+      font-size: 0.83rem; color: var(--text-muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .edu-org  { font-size: 0.9rem; font-weight: 600; color: var(--blue); margin: 4px 0 8px; }
+    .edu-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      text-align: center; padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem; color: var(--text-muted);
+    }
+    footer a {
+      color: var(--blue); text-decoration: none; font-weight: 500;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--blue-dark); text-decoration: underline; }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; }
+      #hero { padding: 56px 24px; }
+      .section-wrap { padding: 60px 24px; }
+      .section-wrap-full .inner { padding: 0 24px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-name  { font-size: 2.5rem; }
+      .about-cards { grid-template-columns: 1fr 1fr; }
+      .project-card { grid-template-columns: 1fr; }
+      .skills-grid  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .about-cards { grid-template-columns: 1fr; }
+      .skills-grid  { grid-template-columns: 1fr; }
+      .section-title { font-size: 2rem; }
+      .hero-name     { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAV
+════════════════════════════════════════ -->
+<nav>
+  <a href="#hero" class="nav-brand">Tracy Mboya</a>
+
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+
+  <div class="nav-icons">
+    <a href="mailto:tracymboya254@gmail.com" title="Email">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m2 7 10 7 10-7"/>
+      </svg>
+    </a>
+    <a href="https://github.com/Tracymboya-coder" target="_blank" rel="noopener" title="GitHub">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.505.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.396.1 2.65.641.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.748 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+      </svg>
+    </a>
+    <a href="https://linkedin.com/in/tracymboya" target="_blank" rel="noopener" title="LinkedIn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.447 20.452H17.21v-5.569c0-1.327-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.987V9h3.102v1.561h.044c.431-.816 1.484-1.676 3.054-1.676 3.266 0 3.867 2.149 3.867 4.944v6.623zM5.337 7.433a1.8 1.8 0 1 1 0-3.601 1.8 1.8 0 0 1 0 3.601zM6.956 20.452H3.717V9h3.239v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     HERO  ← Image 1
+     Hover effects:
+       • photo wrap lifts + scales on hover
+       • contact links slide right + blue bg
+       • buttons lift + deepen / invert
+       • nav icons lift + blue bg pill
+════════════════════════════════════════ -->
+<div id="hero">
+  <div class="hero-inner">
+
+    <!-- LEFT: text -->
+    <div>
+      <h1 class="hero-name">Tracy Mboya</h1>
+      <p class="hero-role">Software Engineer</p>
+      <p class="hero-sub">Full-Stack Development &amp; Data Integration</p>
+
+      <div class="hero-contacts">
+        <a class="hero-link" href="mailto:tracymboya254@gmail.com">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m2 7 10 7 10-7"/>
+          </svg>
+          tracymboya254@gmail.com
+        </a>
+        <a class="hero-link" href="https://github.com/Tracymboya-coder" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.505.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.396.1 2.65.641.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.748 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+          </svg>
+          github.com/Tracymboya-coder
+        </a>
+        <a class="hero-link" href="https://linkedin.com/in/tracymboya" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452H17.21v-5.569c0-1.327-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.987V9h3.102v1.561h.044c.431-.816 1.484-1.676 3.054-1.676 3.266 0 3.867 2.149 3.867 4.944v6.623zM5.337 7.433a1.8 1.8 0 1 1 0-3.601 1.8 1.8 0 0 1 0 3.601zM6.956 20.452H3.717V9h3.239v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+          </svg>
+          linkedin.com/in/tracymboya
+        </a>
+        <span class="hero-link" style="cursor:default;">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 21s-8-6.5-8-12a8 8 0 1 1 16 0c0 5.5-8 12-8 12z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          Nairobi, Kenya
+        </span>
+      </div>
+
+      <div class="hero-btns">
+        <a href="mailto:tracymboya254@gmail.com" class="btn-primary">Get In Touch</a>
+        <a href="#" class="btn-outline">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/>
+            <path d="M4 20h16"/>
+          </svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT: photo -->
+    <div class="hero-photo-wrap">
+      <!--
+        SWAP THIS SRC for your actual photo.
+        The image below is a placeholder from Unsplash.
+        Recommended: a square or 4:3 portrait of you at your desk/laptop.
+      -->
+      <img
+        class="hero-photo"
+        src="profile.png"
+        alt="Tracy Mboya "
+      />
+    </div>
+
+  </div>
+</div><!-- /#hero -->
+
+
+<!-- ════════════════════════════════════════
+     ABOUT  ← Image 2
+     Hover effects:
+       • cards lift, shadow turns blue, bg deepens
+════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-wrap">
+    <h2 class="section-title">About Me</h2>
+    <div class="section-bar"></div>
+
+    <p class="about-bio">
+      Creative and analytical software engineer with a strong portfolio of real-world products built for
+      the Kenyan market. I combine full-stack development skills with product thinking and UX design to
+      ship solutions that are technically sound and genuinely usable. Currently participating in AI and
+      fintech innovation programmes while delivering agri-tech and fintech products. French B1 certified
+      with strong communication skills across cross-cultural and professional settings.
+    </p>
+
+    <div class="about-cards">
+
+      <!-- Card 1 -->
+      <div class="about-card">
+        <div class="about-card-icon">
+          <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path d="M8 9l-4 4 4 4m8-8 4 4-4 4"/>
+          </svg>
+        </div>
+        <h3>Full-Stack Development</h3>
+        <p>Building end-to-end solutions with Python, Flask, React, and modern web technologies</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="about-card">
+        <div class="about-card-icon">
+          <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/>
+          </svg>
+        </div>
+        <h3>UX/UIDesign</h3>
+        <p>Creating user-centered designs that are both User friendly and functional</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="about-card">
+        <div class="about-card-icon">
+          <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>
+          </svg>
+        </div>
+        <h3>Kenyan Market Driven</h3>
+        <p>Developing real-world products for agri-tech and fintech sectors in Kenya</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="about-card">
+        <div class="about-card-icon">
+          <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+          </svg>
+        </div>
+        <h3>AI Innovation</h3>
+        <p>Exploring AI-powered financial solutions and product innovation</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     EXPERIENCE  ← Image 3
+     Hover effects:
+       • cards lift, border darkens, shadow appears
+════════════════════════════════════════ -->
+<div class="section-wrap-full" id="experience">
+  <div class="inner">
+    <h2 class="section-title">Experience &amp; Programs</h2>
+    <div class="section-bar"></div>
+
+    <div class="exp-list">
+
+      <!-- Entry 1 -->
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <p class="exp-title">AI Challenge Participant</p>
+            <p class="exp-org">ATF x KCB Trainee Programme</p>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              2026 – Present
+            </span>
+            <span class="exp-loc">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M12 21s-8-6.5-8-12a8 8 0 1 1 16 0c0 5.5-8 12-8 12z"/>
+                <circle cx="12" cy="9" r="2"/>
+              </svg>
+              Nairobi, Kenya
+            </span>
+          </div>
+        </div>
+        <p class="exp-desc">Competitive AI and fintech innovation programme in partnership with KCB Bank Kenya — ongoing cohort.</p>
+        <ul class="exp-bullets">
+          <li>Selected for the ATF x KCB Trainee Programme, a competitive cohort developing AI-powered financial solutions for the Kenyan market.</li>
+          <li>Currently working on AI-integrated product concepts addressing financial inclusion, credit accessibility, and mobile money user experience.</li>
+          <li>Collaborating cross-functionally on rapid prototyping, pitching, and iterating on data-driven product ideas.</li>
+          <li>Gaining hands-on exposure to AI/ML application design, product strategy, and real-world fintech problem framing.</li>
+        </ul>
+      </div>
+
+      <!-- Entry 2 -->
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <p class="exp-title">Software Engineering Student</p>
+            <p class="exp-org">Moringa School</p>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              2026 – Present
+            </span>
+            <span class="exp-loc">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M12 21s-8-6.5-8-12a8 8 0 1 1 16 0c0 5.5-8 12-8 12z"/>
+                <circle cx="12" cy="9" r="2"/>
+              </svg>
+              Nairobi, Kenya
+            </span>
+          </div>
+        </div>
+        <p class="exp-desc">Full-stack software engineering bootcamp — intensive, project-based curriculum.</p>
+        <ul class="exp-bullets">
+          <li>Building full-stack applications using Python, Flask, SQLAlchemy, React, and MySQL across a structured curriculum.</li>
+          <li>Completed OOP labs, REST API design, CLI tools with argparse, and test-driven development with pytest.</li>
+          <li>Developing Poultry Connect — an agri-marketplace for Kenyan smallholder farmers — as flagship portfolio project.</li>
+          <li>Practising Git feature-branch workflows, code review culture, and professional engineering practices.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /#experience -->
+
+
+<!-- ════════════════════════════════════════
+     PROJECTS  ← Image 4
+     Hover effects:
+       • entire card lifts + shadow
+       • project image zooms inside its container
+       • blue overlay label appears on image hover
+       • tech tags lift + border + bg
+       • GitHub / Live links invert on hover
+════════════════════════════════════════ -->
+<section id="projects">
+  <div class="section-wrap">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="section-bar"></div>
+
+    <!-- PROJECT 1: Poultry Connect -->
+    <div class="project-card">
+      <div class="project-img-wrap">
+        <!--
+          IMAGE: Poultry Connect
+          SWAP src below for a screenshot of your actual project UI,
+          or keep this royalty-free chicken/farm image as a placeholder.
+        -->
+        <img
+          class="project-img"
+          src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=700&q=80"
+          alt="Poultry Connect – Kenyan smallholder chicken farm"
+        />
+        <div class="project-img-overlay">
+          <span>View Project →</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="project-name">Poultry Connect</h3>
+        <p class="project-type">Agri-Marketplace Platform</p>
+        <p class="project-desc">
+          A full-stack marketplace connecting Kenyan smallholder poultry farmers to restaurants,
+          supermarkets, and hotels — with flock management, feed tracking, and P&amp;L reporting.
+        </p>
+
+        <div class="project-links">
+          <a class="project-link" href="https://github.com/Tracymboya-coder" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.505.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.396.1 2.65.641.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.748 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+          <a class="project-link" href="#" target="_blank" rel="noopener">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            Live Demo
+          </a>
+        </div>
+
+        <p class="project-label">Key Achievements</p>
+        <ul class="project-bullets">
+          <li>Designed and built a full-stack marketplace connecting Kenyan smallholder poultry farmers to restaurants, supermarkets, and hotels — with flock management, feed tracking, and P&amp;L reporting.</li>
+          <li>Integrated Mpesa Daraja STK push payments and real-time buyer-farmer messaging; deployed backend on Railway with a multi-tenant relational schema.</li>
+          <li>Built a revenue dashboard with Recharts and explored PWA/React Native conversion to extend reach to low-bandwidth rural users.</li>
+        </ul>
+
+        <p class="project-label">Technologies</p>
+        <div class="tech-tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Tailwind CSS</span>
+          <span class="tech-tag">Recharts</span>
+          <span class="tech-tag">Flask</span>
+          <span class="tech-tag">SQLAlchemy</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">Mpesa Daraja</span>
+          <span class="tech-tag">Railway</span>
+        </div>
+      </div>
+    </div><!-- /project-card -->
+
+    <!-- PROJECT 2: Pesa Pockets -->
+    <div class="project-card">
+      <div class="project-img-wrap">
+        <!--
+          IMAGE: Pesa Pockets
+          SWAP src below for a screenshot of your Figma prototype or app UI.
+          Placeholder: mobile banking / M-Pesa themed image from Unsplash.
+        -->
+        <img
+          class="project-img"
+          src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=700&q=80"
+          alt="Pesa Pockets – Personal finance app for Kenyan gig workers"
+        />
+        <div class="project-img-overlay">
+          <span>View Project →</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="project-name">Ji sort</h3>
+        <p class="project-type">Personal Finance App</p>
+        <p class="project-desc">
+          A  personal finance app targeting Kenyan gig workers —
+          featuring M-Pesa SMS auto-categorisation and a marketplace layer for micro-credit and savings.
+        </p>
+
+        <div class="project-links">
+          <a class="project-link" href="https://github.com/Tracymboya-coder" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.505.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.396.1 2.65.641.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.748 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+          <a class="project-link" href="#" target="_blank" rel="noopener">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M9 9h6M9 12h6M9 15h4"/>
+            </svg>
+             Prototype
+          </a>
+        </div>
+
+        <p class="project-label">Key Achievements</p>
+        <ul class="project-bullets">
+          <li>Designed the core UX flow for automatic M-Pesa SMS transaction parsing and categorisation with zero manual entry required.</li>
+          <li>Conceptualised a marketplace layer connecting gig workers to micro-credit and savings products tailored to irregular income patterns.</li>
+          <li>Produced Figma prototypes covering onboarding, dashboard, and budget-review flows, validated through user feedback sessions.</li>
+        </ul>
+
+        <p class="project-label">Technologies</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Figma</span>
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Tailwind CSS</span>
+          <span class="tech-tag">Flask</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">M-Pesa API</span>
+        </div>
+      </div>
+    </div><!-- /project-card -->
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SKILLS  ← Image 5
+     Hover effects:
+       • cards lift + blue border + blue shadow
+       • individual skill tags lift + blue border + bg
+════════════════════════════════════════ -->
+<div class="section-wrap-full" id="skills">
+  <div class="inner">
+    <h2 class="section-title">Skills &amp; Expertise</h2>
+    <div class="section-bar"></div>
+
+    <div class="skills-grid">
+
+      <!-- Languages & Markup -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M8 9l-4 4 4 4m8-8 4 4-4 4"/>
+          </svg>
+          <h3>Languages &amp; Markup</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">HTML</span>
+          <span class="skill-tag">CSS</span>
+          <span class="skill-tag">Bash</span>
+        </div>
+      </div>
+
+      <!-- Frameworks -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <h3>Frameworks</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">SQLAlchemy</span>
+          <span class="skill-tag">Tailwind CSS</span>
+          <span class="skill-tag">FastAPI (learning)</span>
+        </div>
+      </div>
+
+      <!-- Databases -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/>
+            <path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
+          </svg>
+          <h3>Databases</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+        </div>
+      </div>
+
+      <!-- Tools & Platforms -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+          <h3>Tools &amp; Platforms</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">Docker (basics)</span>
+          <span class="skill-tag">Railway</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">pytest</span>
+        </div>
+      </div>
+
+      <!-- Practices -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          <h3>Practices</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">OOP</span>
+          <span class="skill-tag">REST API design</span>
+          <span class="skill-tag">TDD</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">Agile</span>
+          <span class="skill-tag">UX prototyping</span>
+        </div>
+      </div>
+
+      <!-- Human Languages -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>
+          </svg>
+          <h3>Human Languages</h3>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">English (fluent)</span>
+          <span class="skill-tag">French (B1 – DELF certified)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /#skills -->
+
+
+<!-- ════════════════════════════════════════
+     EDUCATION  ← Image 6
+     Hover effects:
+       • card lifts + shadow + border darkens
+       • blue icon square scales + darkens on card hover
+════════════════════════════════════════ -->
+<section id="education">
+  <div class="section-wrap">
+    <h2 class="section-title">Education &amp; Certifications</h2>
+    <div class="section-bar"></div>
+
+    <div class="edu-list">
+
+      <!-- Moringa School -->
+      <div class="edu-card">
+        <div class="edu-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/>
+            <path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/>
+          </svg>
+        </div>
+        <div class="edu-body">
+          <div class="edu-header">
+            <span class="edu-title">Software Engineering Programme</span>
+            <span class="edu-date">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              2026 – Present
+            </span>
+          </div>
+          <p class="edu-org">Moringa School</p>
+          <p class="edu-desc">Full-stack curriculum: Python, OOP, Flask, MySQL, REST APIs, React, pytest, Git. Certificate awarded on completion.</p>
+        </div>
+      </div>
+
+      <!-- ATF x KCB -->
+      <div class="edu-card">
+        <div class="edu-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <div class="edu-body">
+          <div class="edu-header">
+            <span class="edu-title">ATF x KCB Trainee Programme – AI Challenge</span>
+            <span class="edu-date">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              2026 – Present
+            </span>
+          </div>
+          <p class="edu-org">Africa Tech Festival / KCB Bank Kenya</p>
+          <p class="edu-desc">Competitive AI and fintech innovation programme</p>
+        </div>
+      </div>
+
+      <!-- DELF B1 -->
+      <div class="edu-card">
+        <div class="edu-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <div class="edu-body">
+          <div class="edu-header">
+            <span class="edu-title">DELF B1 – French Language Proficiency</span>
+            <span class="edu-date">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              2024
+            </span>
+          </div>
+          <p class="edu-org">Alliance Française</p>
+          <p class="edu-desc">French language certification at B1 level</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <p>© 2026 Tracy Mboya &nbsp;·&nbsp; Nairobi, Kenya &nbsp;·&nbsp;
+    <a href="mailto:tracymboya254@gmail.com">tracymboya254@gmail.com</a>
+  </p>
+</footer>
+
+</body>
+</html>
